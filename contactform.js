@@ -34,28 +34,22 @@ var concernSubmit = function() {
 concernForm.addEventListener('submit', concernSubmit);
 
 //Comment Form
-var Comment = function(userName, text) {
+var Comment = function(userName, commentText) {
   this.userName = userName;
-  this.text = text;
+  this.commentText = commentText;
   commentData.push(this);
 }
 
 var render = function(comment) {
-  var li = document.createElement('li');
-  li.innerHTML = "\"" + comment.text + "\"" + " - " + comment.userName;
-  return li;
-}
-
-Comment.prototype.render = function() {
-  var li = document.createElement('li');
-  li.innerHTML = "\"" + this.text + "\"" + " - " + this.userName;
-  return li;
+  var $li = $('<li></li>');
+  $li.text('"' + comment.commentText + '"' + ' - '  + comment.userName);
+  return $li;
 }
 
 var renderAllComments = function() {
   comments.innerHTML = '';
   commentData.forEach(function(comment) {
-    commentdisplay.appendChild(render(comment));
+    $('#commentdisplay').append(render(comment));
   })
 }
 
@@ -75,18 +69,16 @@ function checkLocal () {
 
 var commentSubmit = function(event) {
   event.preventDefault();
-
-  if (!event.target.name.value || !event.target.comment.value) {
+  var $commenter = $('#commentername');
+  var $submission = $('#textbox2');
+  if (!$commenter.val() || !$submission.val()) {
     return alert ('You must fill in all the fields');
   }
 
-  var commenter = event.target.name.value;
-  var submission = event.target.comment.value;
-
-  var newComment = new Comment(commenter, submission);
-  console.log('Comment by ' + event.target.name.value + ' at ' + Date());
-  event.target.name.value = null;
-  event.target.comment.value = null;
+  var newComment = new Comment($commenter.val(), $submission.val());
+  // console.log('Comment by ' + event.target.name.value + ' at ' + Date());
+  $commenter.val('');
+  $submission.val('');
 
   localStorage.setItem('commentData', JSON.stringify(commentData));
   renderAllComments();
