@@ -10,3 +10,5 @@ Miranda: CSS formatting; JS for email list; home pages and graphics for header a
 Thom: Support/Donations page; JS form for donation + local storage; CSS for items.
 Rick: About + Team pages; animations; JS + local storage; images and content; CSS.
 George: linked map; (stretchgoal) donations graph; Rolling quotations; CSS.
+
+Testing github
