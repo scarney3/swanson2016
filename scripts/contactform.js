@@ -10,7 +10,7 @@ var Contact = function (firstName, lastName, concern) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.concern = concern;
-}
+};
 // not sure why this is here just it just sends alerts.
 commentForm.contactUsSubmit = function() {
   event.preventDefault();
@@ -30,7 +30,7 @@ commentForm.contactUsSubmit = function() {
   event.target.firstname.value = null;
   event.target.lastname.value = null;
   event.target.concern.value = null;
-}
+};
 
 commentForm.concernForm.addEventListener('submit', commentForm.contactUsSubmit);
 
@@ -39,20 +39,20 @@ var Comment = function(userName, commentText) {
   this.userName = userName;
   this.commentText = commentText;
   commentForm.commentData.push(this);
-}
+};
 
 commentForm.render = function(comment) {
   var $li = $('<li></li>');
-  $li.text('"' + comment.commentText + '"' + ' - '  + comment.userName);
+  $li.text('"' + comment.commentText + '"' + ' - ' + comment.userName);
   return $li;
-}
+};
 
 commentForm.renderAllComments = function() {
   // comments.innerHTML = '';
   commentForm.commentData.forEach(function(comment) {
     $('#commentdisplay').append(commentForm.render(comment));
-  })
-}
+  });
+};
 
 commentForm.checkLocal= function() {
   if (localStorage.commentData) {
@@ -67,7 +67,7 @@ commentForm.checkLocal= function() {
     var Jerry = new Comment('Jerry/Gary/Larry Gergich', 'Ron has cried twice in his life. Once, when he was 7 and was hit by a bus, and again when he learned that L\'il Sebastian had passed. That\'s the kind of man I\'d like to see as President.');
     var Burt = new Comment('Burt Macklin, FBI','Burt Macklin. FBI. You thought I was dead? So did the President\'s enemies.');
   }
-}
+};
 commentForm.checkLocal();
 
 commentForm.commentSubmit = function(event) {
@@ -78,14 +78,14 @@ commentForm.commentSubmit = function(event) {
     return alert ('You must fill in all the fields');
   }
 
-commentForm.newComment = new Comment($commenter.val(), $submission.val());
+  commentForm.newComment = new Comment($commenter.val(), $submission.val());
   // console.log('Comment by ' + event.target.name.value + ' at ' + Date());
   $commenter.val('');
   $submission.val('');
 
   localStorage.setItem('commentData', JSON.stringify(commentForm.commentData));
   commentForm.renderAllComments();
-}
+};
 
 addEventListener('submit', commentForm.commentSubmit);
 commentForm.renderAllComments();

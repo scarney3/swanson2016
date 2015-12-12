@@ -1,26 +1,26 @@
 var value;
-var radios = document.forms["donation"].elements["donate"];
-// var radioForm = document.getElementById("donation");
-//var billingForm = document.getElementById("paymentInfo");
-// var cbox1 = "#cbox1")
+var radios = document.forms['donation'].elements['donate'];
+// var radioForm = document.getElementById('donation');
+//var billingForm = document.getElementById('paymentInfo');
+// var cbox1 = '#cbox1')
 var information = [];
 
 var getData = localStorage.getItem('billingInformation');
 var getDataParsed = JSON.parse(getData);
 if (localStorage.billingInformation) {
-information = getDataParsed;
+  information = getDataParsed;
 };
 
 var formIds = {
-  creditNum: $("#cred"),
-  first: $("#first"),
-  last: $("#last"),
-  phone: $("#phone"),
-  email: $("#email"),
-  address: $("#address"),
-  city: $("#city"),
-  state: $("#state"),
-  zip: $("#zip")
+  creditNum: $('#cred'),
+  first: $('#first'),
+  last: $('#last'),
+  phone: $('#phone'),
+  email: $('#email'),
+  address: $('#address'),
+  city: $('#city'),
+  state: $('#state'),
+  zip: $('#zip')
 };
 $('#donation input').on('click', function(){
   if(this === $('#label7') ){
@@ -36,14 +36,14 @@ $('#donation input').on('click', function(){
 //http://jsfiddle.net/T7gE7/4/     ~source sorta
 // var hideInput = function() {
 
-  // var empty = document.getElementById("empty");
-  // var field = document.getElementById("hidden");
-  // $('.hidden').attr('display', 'none');//.style.display = "none";
-  // $('#empty').attr('display', 'none');//.style.display = "none";
+  // var empty = document.getElementById('empty');
+  // var field = document.getElementById('hidden');
+  // $('.hidden').attr('display', 'none');//.style.display = 'none';
+  // $('#empty').attr('display', 'none');//.style.display = 'none';
 // };
 
 // var showInput = function() {
-//   document.getElementById("hidden").style.display = "inline";
+//   document.getElementById('hidden').style.display = 'inline';
 // };
 //get info from forms
 var Billing = function (creditNum, ccv, firstName, lastName, phone, email, address, city, state, zip) {
@@ -79,13 +79,13 @@ var handleCheck = function(checkbox) {
 };
 
 var handleBilling = function (event) {
-    event.preventDefault();
+  event.preventDefault();
     // var value = $('#donation').val();
   if ((!event.target.credit.value) || (!event.target.ccv.value) || (!event.target.firstName.value) || (!event.target.lastName.value) || (!event.target.phoneNumber.value) || (!event.target.email.value) || (!event.target.address.value) || (!event.target.city.value) || (!event.target.state.value) || (!event.target.zip.value)) {
-      return alert("Please Fill All Fields");
-    }
+    return alert('Please Fill All Fields');
+  }
   if (value === undefined) {
-    return alert("Please select a donation amount");
+    return alert('Please select a donation amount');
   }
   // console.log(value);
 
@@ -101,29 +101,29 @@ var handleBilling = function (event) {
   var zip = event.target.zip.value;
 
   if ($('#cbox1').checked === false) {
-  var newBilling = new Billing(credit, ccv, first, last, number, email, add, city, state, zip);
-  var toLocal = JSON.stringify(information);
-  localStorage.setItem('billingInformation', toLocal);
-  console.log(credit + " is your credit card number");
+    var newBilling = new Billing(credit, ccv, first, last, number, email, add, city, state, zip);
+    var toLocal = JSON.stringify(information);
+    localStorage.setItem('billingInformation', toLocal);
+    console.log(credit + 'is your credit card number');
   }
 
   var hideForms = function() {
-    var box = document.getElementById("giftForms");
-    var gifts = document.getElementById("gifts")
-    gifts.style.display = "none";
-    box.style.display = "none";
-    }
+    var box = document.getElementById('giftForms');
+    var gifts = document.getElementById('gifts');
+    gifts.style.display = 'none';
+    box.style.display = 'none';
+  };
 
   var response = function() {
     var giftPic = document.createElement('img');
-    var greeting = document.createElement("h3");
-    var position = document.getElementById("empty");
-    giftPic.src = "http://thenewswheel.com/wp-content/uploads/2015/01/ron-swanson-630x345.png";
-    greeting.textContent = " Thank you " + first + ", for the donation of $" + value + ", your gift of equal value will arrive in 6-8 weeks. Remember to vote for me on November fourth. Or don't. I don't care. ~ Ron";
+    var greeting = document.createElement('h3');
+    var position = document.getElementById('empty');
+    giftPic.src = 'http://thenewswheel.com/wp-content/uploads/2015/01/ron-swanson-630x345.png';
+    greeting.textContent = ' Thank you ' + first + ', for the donation of $' + value + ', your gift of equal value will arrive in 6-8 weeks. Remember to vote for me on November fourth. Or don\'t. I don\'t care. ~ Ron';
     position.appendChild(giftPic);
     position.appendChild(greeting);
-    position.style.display = "block";
-    }
+    position.style.display = 'block';
+  };
   hideForms();
   response();
 };
@@ -137,7 +137,7 @@ var handleRadio = function(event){
   // showInput();
   // $('.hidden').toggleClass();
   //  hideInput();
-  var newLabel = document.getElementById("span");
+  var newLabel = document.getElementById('span');
   newLabel.textContent ='$' + value;
 };
 
