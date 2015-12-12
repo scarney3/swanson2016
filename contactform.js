@@ -1,7 +1,9 @@
-// Global vars
-var comments = document.getElementById('commentdisplay');
-var commentForm = document.getElementById('commentform');
-var commentData = [];
+// Global vars ///not anymore....
+commentForm = {};
+commentForm.comments = document.getElementById('commentdisplay');
+commentForm.commentForm = document.getElementById('commentform');
+commentForm.commentData = [];
+commentForm.concernForm = document.getElementById('contactform');
 
 //Contact Form
 var Contact = function (firstName, lastName, concern) {
@@ -9,9 +11,8 @@ var Contact = function (firstName, lastName, concern) {
   this.lastName = lastName;
   this.concern = concern;
 }
-
-var concernForm = document.getElementById('contactform');
-var concernSubmit = function() {
+// not sure why this is here just it just sends alerts.
+commentForm.contactUsSubmit = function() {
   event.preventDefault();
 
   if (!event.target.firstname.value || !event.target.lastname.value || !event.target.concern.value) {
@@ -31,33 +32,34 @@ var concernSubmit = function() {
   event.target.concern.value = null;
 }
 
-concernForm.addEventListener('submit', concernSubmit);
+commentForm.concernForm.addEventListener('submit', commentForm.contactUsSubmit);
 
 //Comment Form
 var Comment = function(userName, commentText) {
   this.userName = userName;
   this.commentText = commentText;
-  commentData.push(this);
+  commentForm.commentData.push(this);
 }
 
-var render = function(comment) {
+commentForm.render = function(comment) {
   var $li = $('<li></li>');
   $li.text('"' + comment.commentText + '"' + ' - '  + comment.userName);
   return $li;
 }
 
-var renderAllComments = function() {
-  comments.innerHTML = '';
-  commentData.forEach(function(comment) {
-    $('#commentdisplay').append(render(comment));
+commentForm.renderAllComments = function() {
+  // comments.innerHTML = '';
+  commentForm.commentData.forEach(function(comment) {
+    $('#commentdisplay').append(commentForm.render(comment));
   })
 }
 
-function checkLocal () {
+commentForm.checkLocal= function() {
   if (localStorage.commentData) {
-    commentData = JSON.parse(localStorage.getItem('commentData'));
-    renderAllComments();
+    commentForm.commentData = JSON.parse(localStorage.getItem('commentData'));
+    commentForm.renderAllComments();
   } else {
+    // load from json.
     var April = new Comment('April Ludgate', 'Usually I hate people, places, and things. Ron\'s OK though.');
     var Leslie = new Comment('Leslie Knope', 'Ron is a poetic noble land mermaid.');
     var Tom = new Comment('Tom Haverford', 'Entertainment720 will be hosting all the dope ass parties in the White House if Ron gets elected.');
@@ -65,9 +67,10 @@ function checkLocal () {
     var Jerry = new Comment('Jerry/Gary/Larry Gergich', 'Ron has cried twice in his life. Once, when he was 7 and was hit by a bus, and again when he learned that L\'il Sebastian had passed. That\'s the kind of man I\'d like to see as President.');
     var Burt = new Comment('Burt Macklin, FBI','Burt Macklin. FBI. You thought I was dead? So did the President\'s enemies.');
   }
-} checkLocal();
+}
+commentForm.checkLocal();
 
-var commentSubmit = function(event) {
+commentForm.commentSubmit = function(event) {
   event.preventDefault();
   var $commenter = $('#commentername');
   var $submission = $('#textbox2');
@@ -75,14 +78,14 @@ var commentSubmit = function(event) {
     return alert ('You must fill in all the fields');
   }
 
-  var newComment = new Comment($commenter.val(), $submission.val());
+commentForm.newComment = new Comment($commenter.val(), $submission.val());
   // console.log('Comment by ' + event.target.name.value + ' at ' + Date());
   $commenter.val('');
   $submission.val('');
 
-  localStorage.setItem('commentData', JSON.stringify(commentData));
-  renderAllComments();
+  localStorage.setItem('commentData', JSON.stringify(commentForm.commentData));
+  commentForm.renderAllComments();
 }
 
-commentForm.addEventListener('submit', commentSubmit);
-renderAllComments();
+addEventListener('submit', commentForm.commentSubmit);
+commentForm.renderAllComments();
