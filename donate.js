@@ -1,8 +1,8 @@
 var value;
 var radios = document.forms["donation"].elements["donate"];
-var radioForm = document.getElementById("donation");
-var billingForm = document.getElementById("paymentInfo");
-var cbox1 = document.getElementById("cbox1")
+// var radioForm = document.getElementById("donation");
+//var billingForm = document.getElementById("paymentInfo");
+// var cbox1 = "#cbox1")
 var information = [];
 
 var getData = localStorage.getItem('billingInformation');
@@ -12,34 +12,39 @@ information = getDataParsed;
 };
 
 var formIds = {
-  creditNum: document.getElementById("cred"),
-  first: document.getElementById("first"),
-  last: document.getElementById("last"),
-  phone: document.getElementById("phone"),
-  email: document.getElementById("email"),
-  address: document.getElementById("address"),
-  city: document.getElementById("city"),
-  state: document.getElementById("state"),
-  zip: document.getElementById("zip")
+  creditNum: $("#cred"),
+  first: $("#first"),
+  last: $("#last"),
+  phone: $("#phone"),
+  email: $("#email"),
+  address: $("#address"),
+  city: $("#city"),
+  state: $("#state"),
+  zip: $("#zip")
 };
-
-for(var i = 0; i < 6; i++) {
-  radios[i].onclick = function() {
+$('#donation input').on('click', function(){
+  if(this === $('#label7') ){
+    showInput();
+  }
+  else{
     value = parseInt(this.value);
     console.log(value);
+    // hideInput();
   }
-};
-//http://jsfiddle.net/T7gE7/4/     ~source sorta
-var hideInput = function() {
-  var empty = document.getElementById("empty");
-  var field = document.getElementById("hidden");
-  field.style.display = "none";
-  empty.style.display = "none";
-};
+});
 
-var showInput = function() {
-  document.getElementById("hidden").style.display = "inline";
-};
+//http://jsfiddle.net/T7gE7/4/     ~source sorta
+// var hideInput = function() {
+
+  // var empty = document.getElementById("empty");
+  // var field = document.getElementById("hidden");
+  // $('.hidden').attr('display', 'none');//.style.display = "none";
+  // $('#empty').attr('display', 'none');//.style.display = "none";
+// };
+
+// var showInput = function() {
+//   document.getElementById("hidden").style.display = "inline";
+// };
 //get info from forms
 var Billing = function (creditNum, ccv, firstName, lastName, phone, email, address, city, state, zip) {
   this.creditNum = creditNum;
@@ -57,7 +62,7 @@ var Billing = function (creditNum, ccv, firstName, lastName, phone, email, addre
 
 
 var handleCheck = function(checkbox) {
-  if (cbox1.checked) {
+  if ($('#cbox1').checked) {
     for (var i = 0; i < information.length; i++) {
       if (formIds.creditNum.value === information[i].creditNum) {
         formIds.first.value = information[i].firstName;
@@ -75,13 +80,14 @@ var handleCheck = function(checkbox) {
 
 var handleBilling = function (event) {
     event.preventDefault();
-
+    // var value = $('#donation').val();
   if ((!event.target.credit.value) || (!event.target.ccv.value) || (!event.target.firstName.value) || (!event.target.lastName.value) || (!event.target.phoneNumber.value) || (!event.target.email.value) || (!event.target.address.value) || (!event.target.city.value) || (!event.target.state.value) || (!event.target.zip.value)) {
       return alert("Please Fill All Fields");
     }
   if (value === undefined) {
     return alert("Please select a donation amount");
   }
+  // console.log(value);
 
   var credit = event.target.credit.value;
   var ccv = event.target.ccv.value;
@@ -94,7 +100,7 @@ var handleBilling = function (event) {
   var state = event.target.state.value;
   var zip = event.target.zip.value;
 
-  if (cbox1.checked === false) {
+  if ($('#cbox1').checked === false) {
   var newBilling = new Billing(credit, ccv, first, last, number, email, add, city, state, zip);
   var toLocal = JSON.stringify(information);
   localStorage.setItem('billingInformation', toLocal);
@@ -121,19 +127,22 @@ var handleBilling = function (event) {
   hideForms();
   response();
 };
+/// this sets other amount button'
 
 var handleRadio = function(event){
   event.preventDefault();
   var other = event.target.otherAmount.value;
   value = parseInt(other);
   console.log(value);
-  hideInput();
+  // showInput();
+  // $('.hidden').toggleClass();
+  //  hideInput();
   var newLabel = document.getElementById("span");
   newLabel.textContent ='$' + value;
 };
 
-hideInput();
+// hideInput();
 
-radioForm.addEventListener('submit', handleRadio);
-billingForm.addEventListener('submit', handleBilling);
-cbox1.addEventListener('click', handleCheck);
+$('#donation').on('submit', handleRadio);
+$('#paymentInfo').on('submit', handleBilling);
+$('#cbox1').on('click', handleCheck);
